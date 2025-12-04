@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refer & Earn | PayFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        dark: {
+                            950: '#020202', 
+                            900: '#0a0a0a', 
+                            800: '#121212', 
+                            700: '#1e1e1e',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-sidebar {
+            background: rgba(5, 5, 5, 0.95);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Gradient Text */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm lg:hidden" onclick="toggleSidebar()"></div>
+
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 glass-sidebar z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+        <div class="h-24 flex items-center px-8">
+            <div class="flex items-center gap-3">
+                <div class="relative w-9 h-9 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-blue-600 rounded-xl blur opacity-50"></div>
+                    <div class="relative bg-dark-800 border border-white/10 w-full h-full rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-bolt text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-xl tracking-tight block leading-none">PayFlow</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">Business</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
+            
+            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+                <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Dashboard</span>
+            </a>
+
+            <a href="transactions.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Transactions</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Services</p>
+
+            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-rotate w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Sell Airtime</span>
+            </a>
+
+            <a href="buy-data.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-wifi w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Buy Data</span>
+            </a>
+
+            <a href="pay-bills.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-bolt w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Pay Bills</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Growth</p>
+
+            <a href="referrals.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gift w-5 text-center text-yellow-500 group-hover:text-yellow-400 transition"></i>
+                <span class="font-medium text-sm">Refer & Earn</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Account</p>
+
+            <a href="bank-accounts.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-building-columns w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Bank Accounts</span>
+            </a>
+
+            <a href="settings.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Settings</span>
+            </a>
+        </div>
+
+        <div class="p-4 border-t border-white/5 bg-black/20">
+            <div class="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-white/5 transition" onclick="window.location.href='profile.html'">
+                <div class="relative">
+                    <img src="https://i.pravatar.cc/100?img=11" alt="User" class="w-10 h-10 rounded-full border-2 border-dark-800">
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-dark-800 rounded-full"></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold truncate text-white">Alex Johnson</p>
+                    <p class="text-[10px] text-gray-500 truncate">Tier 2 Verified</p>
+                </div>
+                <a href="auth.html" class="text-gray-500 hover:text-red-400 transition" title="Log out"><i class="fa-solid fa-power-off text-xs"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-dark-950">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-yellow-600/05 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-30"></div>
+        </div>
+
+        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-lg font-semibold text-white">Referral Program</h2>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="relative text-gray-400 hover:text-white transition">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 relative z-10 scroll-smooth">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-yellow-900/40 via-purple-900/20 to-dark-900 border border-white/10 p-8 flex flex-col sm:flex-row items-center justify-between gap-8 group">
+                        <div class="absolute inset-0 bg-grid opacity-10"></div>
+                        
+                        <div class="relative z-10 text-center sm:text-left">
+                            <span class="inline-block px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-bold border border-yellow-500/20 mb-3">
+                                🚀 Boost your income
+                            </span>
+                            <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2">Invite friends, <br> <span class="text-gradient-gold">Earn ₦500 Cash.</span></h1>
+                            <p class="text-sm text-gray-400 max-w-sm">Get paid directly to your wallet for every friend who signs up and performs their first transaction.</p>
+                        </div>
+
+                        <div class="relative z-10 animate-float">
+                            <div class="w-32 h-32 bg-gradient-to-tr from-yellow-500 to-orange-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(234,179,8,0.4)] border-4 border-dark-950">
+                                <i class="fa-solid fa-gift text-5xl text-white"></i>
+                            </div>
+                            <div class="absolute -top-2 -left-4 w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center border border-white/10 shadow-xl">
+                                <i class="fa-solid fa-naira-sign text-yellow-500"></i>
+                            </div>
+                            <div class="absolute bottom-2 -right-2 w-12 h-12 bg-dark-800 rounded-full flex items-center justify-center border border-white/10 shadow-xl">
+                                <i class="fa-solid fa-users text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Total Earnings</p>
+                            <h3 class="text-2xl font-bold text-white">₦ 12,500</h3>
+                            <button class="text-xs text-blue-400 mt-2 hover:text-white transition flex items-center gap-1">
+                                Withdraw to Wallet <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Successful Invites</p>
+                            <h3 class="text-2xl font-bold text-white">25</h3>
+                            <p class="text-xs text-green-400 mt-2">+3 this week</p>
+                        </div>
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Pending</p>
+                            <h3 class="text-2xl font-bold text-white">4</h3>
+                            <p class="text-xs text-gray-500 mt-2">Waiting for transaction</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl overflow-hidden">
+                        <div class="p-6 border-b border-white/5 flex justify-between items-center">
+                            <h3 class="font-bold text-white">Referral History</h3>
+                            <button class="text-xs text-blue-400 hover:text-white">View All</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-white/5 text-gray-500 text-xs uppercase">
+                                    <tr>
+                                        <th class="py-4 pl-6 font-medium">User</th>
+                                        <th class="py-4 font-medium">Date</th>
+                                        <th class="py-4 font-medium">Status</th>
+                                        <th class="py-4 pr-6 text-right font-medium">Reward</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm divide-y divide-white/5">
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="py-4 pl-6 flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold border border-purple-500/20">SJ</div>
+                                            <span class="text-white">Sarah Jenkins</span>
+                                        </td>
+                                        <td class="text-gray-400">Oct 24, 2023</td>
+                                        <td><span class="bg-green-500/10 text-green-400 text-xs px-2 py-1 rounded border border-green-500/20">Active</span></td>
+                                        <td class="text-right pr-6 text-green-400 font-bold">+ ₦500</td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition">
+                                        <td class="py-4 pl-6 flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold border border-blue-500/20">MD</div>
+                                            <span class="text-white">Mike Dean</span>
+                                        </td>
+                                        <td class="text-gray-400">Oct 22, 2023</td>
+                                        <td><span class="bg-yellow-500/10 text-yellow-400 text-xs px-2 py-1 rounded border border-yellow-500/20">Pending</span></td>
+                                        <td class="text-right pr-6 text-gray-600 font-bold">₦0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="font-bold text-white mb-4">Share your link</h3>
+                        
+                        <div class="bg-dark-900 border border-white/10 rounded-xl p-2 flex items-center gap-2 mb-6">
+                            <input type="text" value="payflow.ng/ref/alexj" readonly class="bg-transparent text-sm text-gray-300 flex-1 px-2 focus:outline-none font-mono">
+                            <button onclick="copyLink(this)" class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition relative">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-gray-500 mb-3 uppercase font-bold tracking-wider">Share via</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/20 hover:bg-[#25D366] hover:text-white transition font-medium text-sm">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp
+                            </button>
+                            <button class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#1DA1F2]/10 text-[#1DA1F2] border border-[#1DA1F2]/20 hover:bg-[#1DA1F2] hover:text-white transition font-medium text-sm">
+                                <i class="fa-brands fa-twitter text-lg"></i> Twitter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="font-bold text-white mb-6">How it works</h3>
+                        <div class="space-y-6 relative">
+                            <div class="absolute left-3.5 top-2 bottom-2 w-0.5 bg-white/10"></div>
+
+                            <div class="relative pl-10">
+                                <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-dark-800 border border-white/20 flex items-center justify-center text-sm font-bold text-gray-400 z-10">1</div>
+                                <h4 class="text-sm font-bold text-white">Invite Friends</h4>
+                                <p class="text-xs text-gray-400 mt-1">Share your unique link via social media or email.</p>
+                            </div>
+
+                            <div class="relative pl-10">
+                                <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-dark-800 border border-white/20 flex items-center justify-center text-sm font-bold text-gray-400 z-10">2</div>
+                                <h4 class="text-sm font-bold text-white">They Sign Up & Transact</h4>
+                                <p class="text-xs text-gray-400 mt-1">Friend must verify ID and complete one transaction of ₦1000+.</p>
+                            </div>
+
+                            <div class="relative pl-10">
+                                <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/50 flex items-center justify-center text-sm font-bold text-yellow-500 z-10">3</div>
+                                <h4 class="text-sm font-bold text-white">You Get Paid</h4>
+                                <p class="text-xs text-gray-400 mt-1">₦500 is instantly credited to your referral wallet.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function copyLink(btn) {
+            const input = btn.previousElementSibling;
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            
+            const originalIcon = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-green-400"></i>';
+            setTimeout(() => {
+                btn.innerHTML = originalIcon;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

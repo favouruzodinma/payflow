@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Privacy Policy | PayFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', 
+                        dark: {
+                            950: '#020202',
+                            900: '#0a0a0a', 
+                            800: '#121212', 
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        .glass-nav {
+            background: rgba(2, 2, 2, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* TOC Active State */
+        .toc-link {
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .toc-link.active {
+            border-left-color: #3b82f6;
+            color: white;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-white font-sans antialiased overflow-x-hidden selection:bg-blue-500 selection:text-white">
+
+   <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[128px] animate-blob"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[128px] animate-blob" style="animation-delay: 2s"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-900/5 rounded-full blur-[100px]"></div>
+        <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
+    </div>
+
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-blue-500 rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-500"></div>
+                        <div class="relative bg-dark-800 border border-white/10 w-full h-full rounded-lg flex items-center justify-center text-white text-lg">
+                            <i class="fa-solid fa-right-left"></i>
+                        </div>
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight text-white">PayFlow</span>
+                </div>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html#about" class="text-sm text-gray-400 hover:text-white font-medium transition duration-300 relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="index.html#features" class="text-sm text-gray-400 hover:text-white font-medium transition duration-300 relative group">
+                        Services
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="index.html#how-it-works" class="text-sm text-gray-400 hover:text-white font-medium transition duration-300 relative group">
+                        How it Works
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="auth/auth.html" class="text-gray-300 hover:text-white text-sm font-medium transition">Login</a>
+                    <button onclick="window.location.href='auth/auth.html'" class="relative group px-6 py-2.5 rounded-full bg-white text-black font-semibold text-sm overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] transition-all duration-300">
+                        <span class="relative z-10">Get Cash Now</span>
+                    </button>
+                </div>
+
+                 <div class="md:hidden flex items-center">
+                    <button class="text-gray-300 hover:text-white">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden z-10 text-center">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <h1 class="text-4xl lg:text-6xl font-bold leading-tight tracking-tight mb-4 text-white">
+                Legal <span class="text-gradient">Framework.</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Review the terms governing your use of the PayFlow platform and our commitment to your data privacy.
+            </p>
+            <div class="mt-6 inline-flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+                <i class="fa-solid fa-clock-rotate-left text-blue-400 text-sm"></i>
+                <span class="text-xs text-gray-400">Effective Date: October 24, 2023</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="toc-start" class="relative pb-24 z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                
+                <div class="hidden lg:block lg:col-span-1">
+                    <div class="sticky top-28 glass-card rounded-2xl p-6">
+                        <h4 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Table of Contents</h4>
+                        <nav id="toc-nav" class="space-y-1">
+                            <a href="#terms-intro" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">1. Terms Acceptance</a>
+                            <a href="#terms-airtime" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">2. Airtime Conversion</a>
+                            <a href="#terms-fees" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">3. Fees & Liability</a>
+                            <a href="#terms-kyc" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">4. KYC & Verification</a>
+                            <hr class="border-white/10 my-3">
+                            <a href="#privacy-data" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">5. Data Collected</a>
+                            <a href="#privacy-use" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">6. Use of Information</a>
+                            <a href="#privacy-security" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">7. Data Security</a>
+                            <a href="#privacy-cookies" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">8. Cookies & Tracking</a>
+                            <a href="#terms-contact" class="toc-link block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-r-lg">9. Contact</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <div class="glass-card p-8 md:p-10 rounded-2xl space-y-12">
+                        
+                        <div class="text-center pb-6 border-b border-white/10">
+                            <h2 class="text-2xl font-bold text-blue-400 mb-2">TERMS AND CONDITIONS</h2>
+                            <p class="text-sm text-gray-500">Last updated: October 24, 2023</p>
+                        </div>
+
+                        <section id="terms-intro" class="scroll-mt-24">
+                            <h3 class="text-xl font-bold text-white mb-4">1. Acceptance of Terms</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>These Terms govern your use of the PayFlow Service. By creating an account, you affirm that you are at least 18 years old and legally capable of entering into this agreement.</p>
+                            </div>
+                        </section>
+
+                        <section id="terms-airtime" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">2. Airtime to Cash Services</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>PayFlow facilitates the conversion of airtime into fiat currency (NGN) via third-party aggregators. Conversion rates are dynamic and subject to change without prior notice, though the current rate will always be displayed before transaction confirmation.</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>**Liability:** The user is solely responsible for sending the correct airtime amount to the specific transfer number provided by the platform. PayFlow is not liable for airtime sent to incorrect numbers.</li>
+                                    <li>**Fraud:** We strictly prohibit the use of stolen, unauthorized, or fraudulently acquired airtime. Suspicious accounts will be immediately suspended and reported.</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section id="terms-fees" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">3. Fees, Liability, and Risk</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>We charge a nominal fee for certain services (e.g., withdrawals). All fees are disclosed transparently. PayFlow is not liable for damages or losses arising from network failure, force majeure, or actions taken by the user (e.g., incorrect bank account details).</p>
+                            </div>
+                        </section>
+
+                        <section id="terms-kyc" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">4. KYC and Account Tiers</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>Account usage is divided into Tiers (1, 2, 3) which dictate transaction limits. Upgrading requires compliance with Know Your Customer (KYC) laws, including the submission of BVN and a valid Government-issued ID.</p>
+                            </div>
+                        </section>
+                        
+                        <div class="text-center pt-10 border-t border-white/10">
+                            <h2 class="text-2xl font-bold text-purple-400 mb-2">PRIVACY POLICY</h2>
+                            <p class="text-sm text-gray-500">Protecting your data is our highest priority.</p>
+                        </div>
+
+                        <section id="privacy-data" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">5. Information We Collect</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>We collect necessary data to provide our services and meet legal obligations:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>**Identity Data:** Full name, phone number, email, BVN, NIN/Passport details (for KYC).</li>
+                                    <li>**Transaction Data:** Amounts, network, reference IDs, bank account details for withdrawal.</li>
+                                    <li>**Usage Data:** IP address, device type, and app activity for security and service optimization.</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section id="privacy-use" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">6. How We Use Your Information</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>Your data is used strictly for:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Processing transactions and withdrawals.</li>
+                                    <li>Verifying your identity (KYC/AML compliance).</li>
+                                    <li>Detecting and preventing fraudulent activity.</li>
+                                    <li>Improving service delivery and customer support.</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section id="privacy-security" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">7. Data Security and NDPR Compliance</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>We employ 256-bit SSL encryption for data transmission and multi-factor authentication (2FA) for access. We are committed to adhering to Nigerian Data Protection Regulation (NDPR) guidelines.</p>
+                                <p>While we strive for absolute security, no method of transmission over the Internet is 100% secure. You use the service at your own inherent risk.</p>
+                            </div>
+                        </section>
+
+                        <section id="privacy-cookies" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">8. Cookies and Tracking</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed space-y-4">
+                                <p>We use cookies and similar tracking technologies to track the activity on our Service and hold certain information necessary for login and session management.</p>
+                            </div>
+                        </section>
+
+                        <section id="terms-contact" class="scroll-mt-24 border-t border-white/5 pt-8">
+                            <h3 class="text-xl font-bold text-white mb-4">9. Contact Us</h3>
+                            <div class="text-gray-400 text-sm leading-relaxed">
+                                <p>For any legal inquiries regarding these Terms or the Privacy Policy, please contact our legal team:</p>
+                                <a href="mailto:legal@payflow.ng" class="text-blue-400 hover:text-white transition mt-2 inline-block">legal@payflow.ng</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 bg-black pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mt-12 text-center text-xs text-gray-600">
+                &copy; 2023 PayFlow Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Spy Script (Adapted for the new combined structure)
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const tocNav = document.getElementById('toc-nav');
+            
+            // Generate TOC links based on IDs
+            const tocItems = [
+                { id: 'terms-intro', text: '1. Terms Acceptance' },
+                { id: 'terms-airtime', text: '2. Airtime Conversion' },
+                { id: 'terms-fees', text: '3. Fees & Liability' },
+                { id: 'terms-kyc', text: '4. KYC & Verification' },
+                { id: 'privacy-data', text: '5. Data Collected' },
+                { id: 'privacy-use', text: '6. Use of Information' },
+                { id: 'privacy-security', text: '7. Data Security' },
+                { id: 'privacy-cookies', text: '8. Cookies & Tracking' },
+                { id: 'terms-contact', text: '9. Contact' },
+            ];
+
+            // Helper to scroll smoothly to sections
+            tocNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    e.preventDefault();
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -70% 0px', // Highlights when the section is near the top
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Remove active class from all
+                        document.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
+                        
+                        // Add active class to corresponding link
+                        const id = entry.target.getAttribute('id');
+                        const activeLink = document.querySelector(`#toc-nav a[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe only sections defined in the TOC list
+            sections.forEach(section => {
+                const sectionId = section.getAttribute('id');
+                if (tocItems.some(item => item.id === sectionId)) {
+                    observer.observe(section);
+                }
+            });
+            
+            // Manually activate the first item on load if visible
+            const firstSection = document.getElementById(tocItems[0].id);
+            if (firstSection) {
+                 document.querySelector(`#toc-nav a[href="#${tocItems[0].id}"]`).classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

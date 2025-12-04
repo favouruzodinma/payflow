@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Bills | PayFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        dark: {
+                            950: '#050505', 
+                            900: '#0a0a0a', 
+                            800: '#121212', 
+                            700: '#1e1e1e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-sidebar {
+            background: rgba(5, 5, 5, 0.95);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Category Selection Animation */
+        .cat-btn { transition: all 0.3s ease; }
+        .cat-btn.active {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+        }
+        .cat-btn.active i { color: #3b82f6; transform: scale(1.1); }
+        
+        /* Form Fade In */
+        .bill-form { display: none; animation: fadeIn 0.4s ease; }
+        .bill-form.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm lg:hidden" onclick="toggleSidebar()"></div>
+
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 glass-sidebar z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+        <div class="h-24 flex items-center px-8">
+            <div class="flex items-center gap-3">
+                <div class="relative w-9 h-9 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-blue-600 rounded-xl blur opacity-50"></div>
+                    <div class="relative bg-dark-800 border border-white/10 w-full h-full rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-bolt text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-xl tracking-tight block leading-none">PayFlow</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">Business</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
+            
+            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+                <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Dashboard</span>
+            </a>
+
+            <a href="transactions.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Transactions</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Services</p>
+
+            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-rotate w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Sell Airtime</span>
+            </a>
+
+            <a href="buy-data.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-wifi w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Buy Data</span>
+            </a>
+
+            <a href="pay-bills.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-bolt w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Pay Bills</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Growth</p>
+
+            <a href="referrals.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gift w-5 text-center text-yellow-500 group-hover:text-yellow-400 transition"></i>
+                <span class="font-medium text-sm">Refer & Earn</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Account</p>
+
+            <a href="bank-accounts.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-building-columns w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Bank Accounts</span>
+            </a>
+
+            <a href="settings.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Settings</span>
+            </a>
+        </div>
+
+        <div class="p-4 border-t border-white/5 bg-black/20">
+            <div class="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-white/5 transition" onclick="window.location.href='profile.html'">
+                <div class="relative">
+                    <img src="https://i.pravatar.cc/100?img=11" alt="User" class="w-10 h-10 rounded-full border-2 border-dark-800">
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-dark-800 rounded-full"></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold truncate text-white">Alex Johnson</p>
+                    <p class="text-[10px] text-gray-500 truncate">Tier 2 Verified</p>
+                </div>
+                <a href="auth.html" class="text-gray-500 hover:text-red-400 transition" title="Log out"><i class="fa-solid fa-power-off text-xs"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col relative overflow-hidden">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-10 right-10 w-96 h-96 bg-yellow-500/05 rounded-full blur-[100px]"></div>
+            <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-40"></div>
+        </div>
+
+        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-gray-400"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="text-xl font-semibold text-white">Bill Payments</h2>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block text-right">
+                    <p class="text-xs text-gray-400">Wallet Balance</p>
+                    <p class="text-sm font-bold text-white">₦ 452,300.00</p>
+                </div>
+                <button class="relative text-gray-400 hover:text-white transition">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 lg:p-10 relative z-10">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <div>
+                        <h3 class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3">Select Category</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div onclick="selectCategory('electricity')" id="btn-electricity" class="cat-btn active cursor-pointer glass-panel p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white/5">
+                                <i class="fa-solid fa-lightbulb text-2xl text-gray-400 transition duration-300"></i>
+                                <span class="text-sm font-medium">Electricity</span>
+                            </div>
+                            <div onclick="selectCategory('cable')" id="btn-cable" class="cat-btn cursor-pointer glass-panel p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white/5">
+                                <i class="fa-solid fa-tv text-2xl text-gray-400 transition duration-300"></i>
+                                <span class="text-sm font-medium">Cable TV</span>
+                            </div>
+                            <div onclick="selectCategory('internet')" id="btn-internet" class="cat-btn cursor-pointer glass-panel p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white/5">
+                                <i class="fa-solid fa-wifi text-2xl text-gray-400 transition duration-300"></i>
+                                <span class="text-sm font-medium">Internet</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 lg:p-8 rounded-2xl relative">
+                        
+                        <form id="form-electricity" class="bill-form active space-y-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Pay Electricity Bill</h3>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Service Provider</label>
+                                    <div class="relative">
+                                        <select class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition appearance-none cursor-pointer">
+                                            <option>Ikeja Electric (IKEDC)</option>
+                                            <option>Eko Electric (EKEDC)</option>
+                                            <option>Abuja Electric (AEDC)</option>
+                                            <option>Port Harcourt Electric (PHED)</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Meter Type</label>
+                                    <div class="relative">
+                                        <select class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition appearance-none cursor-pointer">
+                                            <option>Prepaid</option>
+                                            <option>Postpaid</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Meter Number</label>
+                                <div class="relative">
+                                    <input type="text" oninput="verifyCustomer('meter')" id="meter-input" class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Enter meter number">
+                                    <div id="meter-verified" class="hidden absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-green-400 text-xs font-bold bg-green-500/10 px-2 py-1 rounded">
+                                        <i class="fa-solid fa-check"></i> Verified
+                                    </div>
+                                </div>
+                                <p id="meter-name" class="hidden text-xs text-blue-400 mt-2 ml-1 transition-all"><i class="fa-solid fa-user mr-1"></i> Customer: Musa Ibrahim</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Amount</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold">₦</span>
+                                    <input type="number" class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Min: 1,000">
+                                </div>
+                            </div>
+
+                            <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/20 transition transform hover:-translate-y-1">
+                                Purchase Token
+                            </button>
+                        </form>
+
+                        <form id="form-cable" class="bill-form space-y-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                    <i class="fa-solid fa-tv"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Cable TV Subscription</h3>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Provider</label>
+                                    <div class="relative">
+                                        <select class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition appearance-none cursor-pointer">
+                                            <option>DSTV</option>
+                                            <option>GOTV</option>
+                                            <option>Startimes</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Smartcard / IUC Number</label>
+                                    <input type="text" oninput="verifyCustomer('cable')" id="cable-input" class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Enter number">
+                                </div>
+                            </div>
+                            
+                            <div id="cable-name" class="hidden bg-blue-900/10 border border-blue-500/20 p-3 rounded-xl flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">JD</div>
+                                <div>
+                                    <p class="text-sm font-bold text-white">John Doe</p>
+                                    <p class="text-xs text-gray-400">Current Plan: DSTV Compact</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Select Package</label>
+                                <div class="relative">
+                                    <select class="w-full bg-dark-950 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition appearance-none cursor-pointer">
+                                        <option>Padi - ₦2,500</option>
+                                        <option>Yanga - ₦4,200</option>
+                                        <option>Confam - ₦7,400</option>
+                                        <option selected>Compact - ₦12,500</option>
+                                        <option>Premium - ₦29,500</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/20 transition transform hover:-translate-y-1">
+                                Renew Subscription
+                            </button>
+                        </form>
+                        
+                        <div id="form-internet" class="bill-form space-y-6 text-center py-10">
+                             <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-wifi text-3xl text-gray-500"></i>
+                             </div>
+                             <h3 class="text-white font-bold">Internet Services</h3>
+                             <p class="text-gray-500">Spectranet, Smile, and FiberOne payments coming soon.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-bold text-white">Saved Bills</h3>
+                            <button class="text-xs text-blue-400 hover:text-white"><i class="fa-solid fa-plus"></i> New</button>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="group bg-white/5 hover:bg-white/10 border border-white/5 p-3 rounded-xl flex items-center justify-between cursor-pointer transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">Home Meter</p>
+                                        <p class="text-xs text-gray-500">Ikeja Electric</p>
+                                    </div>
+                                </div>
+                                <button class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition">Pay</button>
+                            </div>
+                            
+                            <div class="group bg-white/5 hover:bg-white/10 border border-white/5 p-3 rounded-xl flex items-center justify-between cursor-pointer transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                        <i class="fa-solid fa-tv"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">Mom's DSTV</p>
+                                        <p class="text-xs text-gray-500">Compact Plan</p>
+                                    </div>
+                                </div>
+                                <button class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition">Pay</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="text-lg font-bold text-white mb-4">History</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs text-gray-400"><i class="fa-solid fa-bolt"></i></div>
+                                    <div>
+                                        <p class="text-sm text-white">Electricity</p>
+                                        <p class="text-xs text-gray-500">Oct 20</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-medium text-white">- ₦10,000</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs text-gray-400"><i class="fa-solid fa-tv"></i></div>
+                                    <div>
+                                        <p class="text-sm text-white">DSTV Sub</p>
+                                        <p class="text-xs text-gray-500">Oct 01</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-medium text-white">- ₦12,500</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Logic to switch between forms based on category
+        function selectCategory(category) {
+            // Reset Buttons
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            // Activate Clicked
+            document.getElementById('btn-' + category).classList.add('active');
+
+            // Hide all forms
+            document.querySelectorAll('.bill-form').forEach(form => form.classList.remove('active'));
+            // Show selected form
+            document.getElementById('form-' + category).classList.add('active');
+        }
+
+        // Logic to simulate customer verification
+        function verifyCustomer(type) {
+            if (type === 'meter') {
+                const input = document.getElementById('meter-input').value;
+                const badge = document.getElementById('meter-verified');
+                const name = document.getElementById('meter-name');
+                
+                if (input.length > 9) {
+                    badge.classList.remove('hidden');
+                    name.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                    name.classList.add('hidden');
+                }
+            } else if (type === 'cable') {
+                const input = document.getElementById('cable-input').value;
+                const nameBox = document.getElementById('cable-name');
+                
+                if (input.length > 9) {
+                    nameBox.classList.remove('hidden');
+                } else {
+                    nameBox.classList.add('hidden');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

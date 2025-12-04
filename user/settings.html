@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | PayFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        dark: {
+                            950: '#020202', 
+                            900: '#0a0a0a', 
+                            800: '#121212', 
+                            700: '#1e1e1e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-sidebar {
+            background: rgba(5, 5, 5, 0.95);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Tab Animation */
+        .tab-btn { position: relative; transition: all 0.3s; }
+        .tab-btn.active { color: white; }
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s;
+        }
+        .tab-btn.active::after { width: 100%; }
+
+        /* Content Fade */
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Toggle Switch */
+        .toggle-checkbox:checked { right: 0; border-color: #3b82f6; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm lg:hidden" onclick="toggleSidebar()"></div>
+
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 glass-sidebar z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+        <div class="h-24 flex items-center px-8">
+            <div class="flex items-center gap-3">
+                <div class="relative w-9 h-9 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-blue-600 rounded-xl blur opacity-50"></div>
+                    <div class="relative bg-dark-800 border border-white/10 w-full h-full rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-bolt text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-xl tracking-tight block leading-none">PayFlow</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">Business</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
+            
+            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+                <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Dashboard</span>
+            </a>
+
+            <a href="transactions.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Transactions</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Services</p>
+
+            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-rotate w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Sell Airtime</span>
+            </a>
+
+            <a href="buy-data.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-wifi w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Buy Data</span>
+            </a>
+
+            <a href="pay-bills.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-bolt w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Pay Bills</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Growth</p>
+
+            <a href="referrals.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gift w-5 text-center text-yellow-500 group-hover:text-yellow-400 transition"></i>
+                <span class="font-medium text-sm">Refer & Earn</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Account</p>
+
+            <a href="bank-accounts.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-building-columns w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Bank Accounts</span>
+            </a>
+
+            <a href="settings.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Settings</span>
+            </a>
+        </div>
+
+        <div class="p-4 border-t border-white/5 bg-black/20">
+            <div class="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-white/5 transition" onclick="window.location.href='profile.html'">
+                <div class="relative">
+                    <img src="https://i.pravatar.cc/100?img=11" alt="User" class="w-10 h-10 rounded-full border-2 border-dark-800">
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-dark-800 rounded-full"></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold truncate text-white">Alex Johnson</p>
+                    <p class="text-[10px] text-gray-500 truncate">Tier 2 Verified</p>
+                </div>
+                <a href="auth.html" class="text-gray-500 hover:text-red-400 transition" title="Log out"><i class="fa-solid fa-power-off text-xs"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-dark-950">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-[800px] h-[800px] bg-blue-600/05 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-30"></div>
+        </div>
+
+        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-lg font-semibold text-white">Account Settings</h2>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="relative text-gray-400 hover:text-white transition">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 relative z-10 scroll-smooth">
+            <div class="max-w-5xl mx-auto">
+                
+                <div class="flex flex-wrap gap-8 border-b border-white/10 mb-8 overflow-x-auto">
+                    <button onclick="switchTab('general')" id="btn-general" class="tab-btn active pb-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap">General</button>
+                    <button onclick="switchTab('security')" id="btn-security" class="tab-btn pb-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap">Security</button>
+                    <button onclick="switchTab('notifications')" id="btn-notifications" class="tab-btn pb-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap">Notifications</button>
+                    <button onclick="switchTab('api')" id="btn-api" class="tab-btn pb-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap">API & Webhooks</button>
+                </div>
+
+                <div id="tab-general" class="tab-content active space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row items-center gap-6">
+                        <div class="relative group cursor-pointer">
+                            <img src="https://i.pravatar.cc/300?img=11" class="w-24 h-24 rounded-full border-4 border-dark-900 shadow-xl">
+                            <div class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                <i class="fa-solid fa-camera text-white"></i>
+                            </div>
+                        </div>
+                        <div class="text-center md:text-left flex-1">
+                            <h3 class="text-xl font-bold text-white">Alex Johnson</h3>
+                            <p class="text-gray-400 text-sm">alex.j@example.com</p>
+                            <div class="mt-2 flex flex-wrap justify-center md:justify-start gap-2">
+                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded text-xs font-medium">Personal Account</span>
+                                <span class="bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded text-xs font-medium"><i class="fa-solid fa-circle-check mr-1"></i> KYC Verified</span>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm transition">Upload New Photo</button>
+                    </div>
+
+                    <div class="glass-panel p-6 lg:p-8 rounded-2xl">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold text-white">Personal Information</h4>
+                            <button class="text-blue-400 text-xs hover:text-white transition">Edit Profile</button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Full Name</label>
+                                <input type="text" value="Alexander Johnson" disabled class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white disabled:opacity-50">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Phone Number</label>
+                                <input type="text" value="+234 803 123 4567" class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-blue-500 focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Email Address</label>
+                                <input type="email" value="alex.j@example.com" class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-blue-500 focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Timezone</label>
+                                <select class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-blue-500 focus:outline-none transition">
+                                    <option>(GMT+01:00) West Central Africa</option>
+                                    <option>(GMT+00:00) London</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex justify-end">
+                            <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-blue-600/20 transition-all transform hover:-translate-y-0.5">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-security" class="tab-content space-y-6">
+                    
+                    <div class="glass-panel p-6 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-white text-lg">Two-Factor Authentication</h4>
+                            <p class="text-sm text-gray-400 mt-1">Secure your account with OTP sent to your phone.</p>
+                        </div>
+                        <div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="toggle" id="toggle-2fa" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-700 right-0 checked:right-0 checked:border-blue-500 transition-all duration-300" checked/>
+                            <label for="toggle-2fa" class="toggle-label block overflow-hidden h-6 rounded-full bg-blue-600 cursor-pointer"></label>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 lg:p-8 rounded-2xl">
+                        <h4 class="font-bold text-white mb-6">Change Password</h4>
+                        <div class="space-y-4 max-w-lg">
+                            <input type="password" placeholder="Current Password" class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-blue-500 focus:outline-none transition">
+                            <input type="password" placeholder="New Password" class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-blue-500 focus:outline-none transition">
+                            <input type="password" placeholder="Confirm New Password" class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-blue-500 focus:outline-none transition">
+                            <button class="bg-white/10 hover:bg-white/20 text-white font-bold py-2.5 px-6 rounded-xl border border-white/10 transition">Update Password</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h4 class="font-bold text-white mb-4">Login Sessions</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center text-lg">
+                                        <i class="fa-brands fa-chrome"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">Chrome on Windows</p>
+                                        <p class="text-xs text-gray-500">192.168.1.1 • <span class="text-green-400">Active Now</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center text-lg">
+                                        <i class="fa-solid fa-mobile-screen"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">Safari on iPhone 13</p>
+                                        <p class="text-xs text-gray-500">Lagos, NG • 2 days ago</p>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-red-400 hover:text-white transition">Revoke</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-notifications" class="tab-content space-y-6">
+                    <div class="glass-panel p-6 lg:p-8 rounded-2xl">
+                        <h4 class="font-bold text-white mb-6">Email Notifications</h4>
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-white font-medium">Transaction Alerts</p>
+                                    <p class="text-xs text-gray-500">Receive email when money is sent or received.</p>
+                                </div>
+                                <input type="checkbox" checked class="accent-blue-600 w-5 h-5 rounded cursor-pointer bg-dark-800 border-gray-600">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-white font-medium">Security Alerts</p>
+                                    <p class="text-xs text-gray-500">Login attempts and password changes.</p>
+                                </div>
+                                <input type="checkbox" checked class="accent-blue-600 w-5 h-5 rounded cursor-pointer bg-dark-800 border-gray-600">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-white font-medium">Marketing & Promos</p>
+                                    <p class="text-xs text-gray-500">Product updates and discount offers.</p>
+                                </div>
+                                <input type="checkbox" class="accent-blue-600 w-5 h-5 rounded cursor-pointer bg-dark-800 border-gray-600">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-api" class="tab-content space-y-6">
+                    <div class="glass-panel p-6 lg:p-8 rounded-2xl">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 class="font-bold text-white">API Keys</h4>
+                                <p class="text-xs text-gray-400 mt-1">Manage your keys for developer integration.</p>
+                            </div>
+                            <button class="bg-blue-600/10 text-blue-400 px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-600 hover:text-white transition">Generate New Key</button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Live Public Key</label>
+                                <div class="flex gap-2">
+                                    <input type="text" value="pk_live_82992019920192019201" readonly class="flex-1 bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-gray-400 font-mono text-sm">
+                                    <button class="w-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-white/10 text-gray-400"><i class="fa-regular fa-copy"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Live Secret Key</label>
+                                <div class="flex gap-2">
+                                    <input type="password" value="sk_live_********************" readonly class="flex-1 bg-dark-900 border border-white/10 rounded-xl py-3 px-4 text-gray-400 font-mono text-sm">
+                                    <button class="w-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-white/10 text-gray-400"><i class="fa-regular fa-eye"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-red-500/30 bg-red-500/5 rounded-2xl p-6">
+                        <h4 class="font-bold text-red-500 mb-2">Danger Zone</h4>
+                        <p class="text-sm text-gray-400 mb-4">Once you delete your account, there is no going back. Please be certain.</p>
+                        <button class="text-xs bg-red-500/10 text-red-500 px-4 py-2 rounded-lg border border-red-500/20 hover:bg-red-500 hover:text-white transition">Delete Account</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Remove active from all buttons and contents
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active to selected
+            document.getElementById('btn-' + tabId).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions | PayFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        dark: {
+                            950: '#020202', 
+                            900: '#0a0a0a', 
+                            800: '#121212', 
+                            700: '#1e1e1e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-sidebar {
+            background: rgba(5, 5, 5, 0.95);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Filter Chip Styles */
+        .filter-chip { transition: all 0.3s ease; }
+        .filter-chip.active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
+        
+        /* Transaction Row Hover Effect */
+        .tx-row { transition: all 0.2s ease-in-out; }
+        .tx-row:hover { background: rgba(255, 255, 255, 0.03); transform: scale-[1.005]; border-color: rgba(255,255,255,0.1); }
+
+        /* Receipt Modal */
+        #receipt-modal { transition: opacity 0.3s ease, visibility 0.3s ease; }
+        #receipt-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        #receipt-modal:not(.hidden) { opacity: 1; visibility: visible; pointer-events: auto; }
+        #receipt-content { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        #receipt-modal.hidden #receipt-content { transform: translateY(20px) scale(0.95); }
+        #receipt-modal:not(.hidden) #receipt-content { transform: translateY(0) scale(1); }
+    </style>
+</head>
+<body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm lg:hidden" onclick="toggleSidebar()"></div>
+
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 glass-sidebar z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+        <div class="h-24 flex items-center px-8">
+            <div class="flex items-center gap-3">
+                <div class="relative w-9 h-9 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-blue-600 rounded-xl blur opacity-50"></div>
+                    <div class="relative bg-dark-800 border border-white/10 w-full h-full rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-bolt text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-xl tracking-tight block leading-none">PayFlow</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">Business</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
+            
+            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+                <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Dashboard</span>
+            </a>
+
+            <a href="transactions.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Transactions</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Services</p>
+
+            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-rotate w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Sell Airtime</span>
+            </a>
+
+            <a href="buy-data.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-wifi w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Buy Data</span>
+            </a>
+
+            <a href="pay-bills.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-bolt w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Pay Bills</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Growth</p>
+
+            <a href="referrals.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gift w-5 text-center text-yellow-500 group-hover:text-yellow-400 transition"></i>
+                <span class="font-medium text-sm">Refer & Earn</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Account</p>
+
+            <a href="bank-accounts.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-building-columns w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Bank Accounts</span>
+            </a>
+
+            <a href="settings.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Settings</span>
+            </a>
+        </div>
+
+        <div class="p-4 border-t border-white/5 bg-black/20">
+            <div class="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-white/5 transition" onclick="window.location.href='profile.html'">
+                <div class="relative">
+                    <img src="https://i.pravatar.cc/100?img=11" alt="User" class="w-10 h-10 rounded-full border-2 border-dark-800">
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-dark-800 rounded-full"></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold truncate text-white">Alex Johnson</p>
+                    <p class="text-[10px] text-gray-500 truncate">Tier 2 Verified</p>
+                </div>
+                <a href="auth.html" class="text-gray-500 hover:text-red-400 transition" title="Log out"><i class="fa-solid fa-power-off text-xs"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-dark-950">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-0 right-1/4 w-[800px] h-[800px] bg-blue-600/05 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-30"></div>
+        </div>
+
+        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-lg font-semibold text-white">Transaction History</h2>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-white transition bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/5">
+                    <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">Statement</span>
+                </button>
+                <button class="relative text-gray-400 hover:text-white transition">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 relative z-10">
+            <div class="max-w-5xl mx-auto space-y-8">
+                
+                <div class="flex flex-col md:flex-row gap-4 justify-between">
+                    <div class="relative w-full md:w-96 group">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 transition group-focus-within:text-blue-500"></i>
+                        <input type="text" placeholder="Search references, services..." class="w-full bg-dark-900 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition">
+                    </div>
+
+                    <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                        <button class="filter-chip active border border-transparent px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap">All</button>
+                        <button class="filter-chip border border-white/10 text-gray-400 hover:text-white px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap">Money In</button>
+                        <button class="filter-chip border border-white/10 text-gray-400 hover:text-white px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap">Money Out</button>
+                        <button class="filter-chip border border-white/10 text-gray-400 hover:text-white px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap flex items-center gap-2">
+                            <i class="fa-regular fa-calendar"></i> Date
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    
+                    <div class="animate-fade-in-up">
+                        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 pl-2">Today</h3>
+                        
+                        <div class="glass-panel rounded-2xl overflow-hidden divide-y divide-white/5 border border-white/10">
+                            
+                            <div onclick="openReceipt('credit')" class="tx-row p-5 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-500 shadow-lg shadow-green-900/20">
+                                        <i class="fa-solid fa-arrow-down-long text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white text-base mb-0.5 group-hover:text-blue-400 transition-colors">Airtime Conversion</h4>
+                                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                                            <span>10:42 AM</span>
+                                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                            <span>MTN Airtime</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-mono font-bold text-green-400 text-lg">+ ₦ 4,200.00</p>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold bg-green-500/10 text-green-400 px-2 py-0.5 rounded border border-green-500/20">
+                                        <i class="fa-solid fa-check"></i> Success
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div onclick="openReceipt('debit')" class="tx-row p-5 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 shadow-lg shadow-blue-900/20">
+                                        <i class="fa-solid fa-wifi text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white text-base mb-0.5 group-hover:text-blue-400 transition-colors">Data Purchase</h4>
+                                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                                            <span>09:15 AM</span>
+                                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                            <span>Airtel 10GB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-mono font-bold text-white text-lg">- ₦ 2,500.00</p>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold bg-green-500/10 text-green-400 px-2 py-0.5 rounded border border-green-500/20">
+                                        <i class="fa-solid fa-check"></i> Success
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 pl-2">Yesterday</h3>
+                        
+                        <div class="glass-panel rounded-2xl overflow-hidden divide-y divide-white/5 border border-white/10">
+                            
+                            <div onclick="openReceipt('pending')" class="tx-row p-5 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 shadow-lg shadow-yellow-900/20">
+                                        <i class="fa-solid fa-bolt text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white text-base mb-0.5 group-hover:text-blue-400 transition-colors">Electricity Bill</h4>
+                                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                                            <span>4:30 PM</span>
+                                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                            <span>Ikeja Electric</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-mono font-bold text-white text-lg">- ₦ 10,000.00</p>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold bg-yellow-500/10 text-yellow-400 px-2 py-0.5 rounded border border-yellow-500/20">
+                                        <i class="fa-solid fa-clock-rotate-left"></i> Processing
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div onclick="openReceipt('failed')" class="tx-row p-5 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 shadow-lg shadow-red-900/20">
+                                        <i class="fa-solid fa-building-columns text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white text-base mb-0.5 group-hover:text-red-400 transition-colors">Bank Withdrawal</h4>
+                                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                                            <span>1:00 PM</span>
+                                            <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                            <span>GTBank Transfer</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-mono font-bold text-white text-lg text-opacity-50 line-through">₦ 50,000.00</p>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">
+                                        <i class="fa-solid fa-circle-exclamation"></i> Failed
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="w-full py-4 rounded-2xl border border-dashed border-white/10 text-gray-500 font-medium text-sm hover:text-white hover:border-blue-500 hover:bg-blue-500/5 transition">
+                    View Older Transactions
+                </button>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="receipt-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeReceipt()"></div>
+        
+        <div id="receipt-content" class="relative w-full max-w-md mx-4">
+            <div class="bg-dark-900 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative">
+                
+                <div class="absolute bottom-0 left-0 right-0 h-4 bg-dark-900" style="mask-image: radial-gradient(circle at 10px 0, transparent 0, transparent 10px, black 11px); mask-size: 20px 20px; mask-repeat: repeat-x; transform: rotate(180deg);"></div>
+
+                <div class="bg-gradient-to-br from-blue-600 to-blue-800 p-8 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-grid opacity-20"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-4 border border-white/20">
+                            <i class="fa-solid fa-check text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-white font-bold text-xl">Transaction Receipt</h2>
+                        <p class="text-blue-100 text-xs mt-1 opacity-80">October 24, 2023 at 10:42 AM</p>
+                    </div>
+                </div>
+
+                <div class="p-8 pb-12 bg-dark-900 space-y-6">
+                    
+                    <div class="text-center">
+                        <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Total Amount</p>
+                        <h1 class="text-4xl font-mono font-bold text-white tracking-tight">₦ 4,200.00</h1>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-3 border-b border-white/5">
+                            <span class="text-gray-400 text-sm">Status</span>
+                            <span class="text-green-400 text-sm font-bold bg-green-500/10 px-2 py-1 rounded">Successful</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-white/5">
+                            <span class="text-gray-400 text-sm">Reference ID</span>
+                            <span class="text-white text-sm font-mono select-all cursor-text">TXN-88292019</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-white/5">
+                            <span class="text-gray-400 text-sm">Service Type</span>
+                            <span class="text-white text-sm font-medium">Airtime to Cash</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-white/5">
+                            <span class="text-gray-400 text-sm">Description</span>
+                            <span class="text-white text-sm font-medium">MTN Airtime Swap</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <button class="py-3 rounded-xl border border-white/10 text-gray-400 text-sm font-medium hover:text-white hover:bg-white/5 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-share-nodes"></i> Share
+                        </button>
+                        <button class="py-3 rounded-xl bg-blue-600 text-white text-sm font-bold hover:bg-blue-500 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-download"></i> PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="closeReceipt()" class="absolute -bottom-16 left-1/2 -translate-x-1/2 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Demo logic to open modal
+        function openReceipt(type) {
+            document.getElementById('receipt-modal').classList.remove('hidden');
+        }
+
+        function closeReceipt() {
+            document.getElementById('receipt-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
