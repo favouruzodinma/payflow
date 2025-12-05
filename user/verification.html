@@ -26,12 +26,23 @@
                     },
                     backgroundImage: {
                         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    },
+                    // Animation keyframes for dashed border scanning effect
+                    keyframes: {
+                        scan: {
+                            '0%, 100%': { transform: 'translateY(-100%)' },
+                            '50%': { transform: 'translateY(100%)' },
+                        }
+                    },
+                    animation: {
+                        scan: 'scan 2s ease-in-out infinite',
                     }
                 }
             }
         }
     </script>
     <style>
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #020202; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
@@ -70,6 +81,10 @@
             background-color: rgba(59, 130, 246, 0.05);
             transform: scale-[1.01];
         }
+
+        /* Sidebar Link Styling (Ensuring visual consistency) */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
     </style>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
@@ -95,7 +110,7 @@
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
             
-            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
@@ -164,24 +179,24 @@
             <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-30"></div>
         </div>
 
-        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+        <header class="h-20 flex items-center justify-between px-4 sm:px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
             <div class="flex items-center gap-4">
                 <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
                 <h2 class="text-lg font-semibold text-white">Verification Center</h2>
             </div>
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full backdrop-blur-md">
+            <div class="flex items-center gap-3 sm:gap-6">
+                <div class="flex items-center gap-2 sm:gap-3 bg-white/5 border border-white/10 px-3 sm:px-4 py-1.5 rounded-full backdrop-blur-md">
                     <div class="flex flex-col items-end leading-none">
                         <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Current Level</span>
                         <span class="text-xs font-bold text-white">Tier 1</span>
                     </div>
-                    <div class="w-8 h-8 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30 flex-shrink-0">
                         <i class="fa-solid fa-user-shield text-xs"></i>
                     </div>
                 </div>
-                <button class="relative text-gray-400 hover:text-white transition">
+                <button class="relative text-gray-400 hover:text-white transition hidden sm:block">
                     <i class="fa-regular fa-bell text-xl"></i>
                 </button>
             </div>
@@ -194,10 +209,10 @@
                     
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div>
-                            <h1 class="text-3xl font-bold text-white mb-1">Increase your limits</h1>
+                            <h1 class="text-2xl sm:text-3xl font-bold text-white mb-1">Increase your limits</h1>
                             <p class="text-gray-400 text-sm">Complete the steps below to unlock higher transaction volumes.</p>
                         </div>
-                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-lg shadow-blue-900/20">
+                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-lg shadow-blue-900/20 flex-shrink-0">
                             Next: Tier 2
                         </div>
                     </div>
@@ -205,28 +220,28 @@
                     <div class="space-y-6">
                         
                         <div class="glass-panel rounded-2xl p-6 flex items-center justify-between opacity-60 hover:opacity-80 transition cursor-not-allowed">
-                            <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center border border-green-500/20">
+                            <div class="flex items-center gap-4 sm:gap-5">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center border border-green-500/20 flex-shrink-0">
                                     <i class="fa-solid fa-check text-lg"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-lg">Basic Information</h4>
+                                    <h4 class="font-bold text-white text-base sm:text-lg">Basic Information</h4>
                                     <p class="text-xs text-gray-400">Email & Phone Verified</p>
                                 </div>
                             </div>
-                            <span class="text-green-400 text-xs font-bold bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20">Completed</span>
+                            <span class="text-green-400 text-xs font-bold bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20 flex-shrink-0">Completed</span>
                         </div>
 
-                        <div class="glass-panel active-level rounded-2xl p-8 relative overflow-hidden">
+                        <div class="glass-panel active-level rounded-2xl p-6 sm:p-8 relative overflow-hidden">
                             <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
 
-                            <div class="flex items-center gap-5 mb-8">
-                                <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 font-bold text-xl relative">
+                            <div class="flex items-center gap-4 sm:gap-5 mb-6 sm:mb-8">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 font-bold text-xl relative flex-shrink-0">
                                     2
                                     <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-dark-950 animate-pulse"></span>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-lg">Government ID & BVN</h4>
+                                    <h4 class="font-bold text-white text-base sm:text-lg">Government ID & BVN</h4>
                                     <p class="text-xs text-blue-300">Required for withdrawals > ₦50,000</p>
                                 </div>
                             </div>
@@ -298,15 +313,15 @@
 
                         <div class="glass-panel rounded-2xl p-6 flex items-center justify-between opacity-40 grayscale pointer-events-none">
                             <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-full bg-gray-800 text-gray-500 flex items-center justify-center border border-white/10 font-bold">
+                                <div class="w-12 h-12 rounded-full bg-gray-800 text-gray-500 flex items-center justify-center border border-white/10 font-bold flex-shrink-0">
                                     3
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-lg">Facial Verification</h4>
+                                    <h4 class="font-bold text-white text-base sm:text-lg">Facial Verification</h4>
                                     <p class="text-xs text-gray-400">Unlock Unlimited Limits</p>
                                 </div>
                             </div>
-                            <i class="fa-solid fa-lock text-gray-500"></i>
+                            <i class="fa-solid fa-lock text-gray-500 flex-shrink-0"></i>
                         </div>
 
                     </div>
@@ -396,15 +411,17 @@
             
             if (e.target.value.length === 11) {
                 bvnLoader.classList.remove('hidden');
+                bvnSuccess.classList.add('hidden');
                 
                 // Simulate API Check
                 setTimeout(() => {
                     bvnLoader.classList.add('hidden');
                     bvnSuccess.classList.remove('hidden');
                     bvnInput.classList.add('border-green-500', 'text-green-400');
-                    bvnInput.classList.remove('text-white');
+                    bvnInput.classList.remove('text-white', 'focus:border-blue-500');
                 }, 1500);
             } else {
+                bvnLoader.classList.add('hidden');
                 bvnSuccess.classList.add('hidden');
                 bvnInput.classList.remove('border-green-500', 'text-green-400');
                 bvnInput.classList.add('text-white');

@@ -29,6 +29,7 @@
         }
     </script>
     <style>
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #020202; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
@@ -62,6 +63,17 @@
             color: white;
             background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
         }
+        
+        /* Sidebar Link Styling (Ensuring visual consistency) */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+
+        /* Active nav item for this page */
+        .nav-item.current-page {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-left: 3px solid #3b82f6;
+        }
     </style>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
@@ -83,20 +95,62 @@
 
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
-            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white rounded-lg transition-all duration-200 group">
+            
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
-            
+
+            <a href="transactions.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Transactions</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Services</p>
+
+            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-rotate w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Sell Airtime</span>
+            </a>
+
+            <a href="buy-data.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-wifi w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Buy Data</span>
+            </a>
+
+            <a href="pay-bills.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-bolt w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Pay Bills</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Growth</p>
+
+            <a href="referrals.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gift w-5 text-center text-yellow-500 group-hover:text-yellow-400 transition"></i>
+                <span class="font-medium text-sm">Refer & Earn</span>
+            </a>
+
+            <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Account</p>
+
+            <a href="bank-accounts.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-building-columns w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Bank Accounts</span>
+            </a>
+
+            <a href="settings.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-blue-400 transition"></i>
+                <span class="font-medium text-sm">Settings</span>
+            </a>
+            <a href="support.html" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group">
+                <i class="fa-solid fa-headset w-5 text-center"></i>
+                <span class="font-medium text-sm">Support</span>
+            </a>
+
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Legal</p>
             
-            <a href="#" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group" style="background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-left: 3px solid #3b82f6;">
+            <a href="terms.html" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group current-page">
                 <i class="fa-solid fa-file-contract w-5 text-center"></i>
                 <span class="font-medium text-sm">Terms of Service</span>
-            </a>
-            <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white rounded-lg transition-all duration-200 group">
-                <i class="fa-solid fa-shield-halved w-5 text-center group-hover:text-blue-400 transition"></i>
-                <span class="font-medium text-sm">Privacy Policy</span>
             </a>
         </div>
         
@@ -113,14 +167,14 @@
             <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-30"></div>
         </div>
 
-        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+        <header class="h-20 flex items-center justify-between px-4 sm:px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
             <div class="flex items-center gap-4">
                 <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
                 <h2 class="text-lg font-semibold text-white">Terms & Conditions</h2>
             </div>
-            <div class="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+            <div class="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 hidden sm:flex">
                 <i class="fa-regular fa-calendar text-gray-400 text-xs"></i>
                 <span class="text-xs text-gray-300">Last Updated: Oct 24, 2023</span>
             </div>
@@ -131,7 +185,7 @@
                 
                 <div class="lg:col-span-3 space-y-8">
                     
-                    <div class="glass-panel p-8 rounded-2xl space-y-12">
+                    <div class="glass-panel p-6 sm:p-8 rounded-2xl space-y-12">
                         
                         <section id="introduction" class="scroll-mt-24">
                             <h3 class="text-xl font-bold text-white mb-4">1. Introduction</h3>
@@ -272,6 +326,11 @@
             sections.forEach(section => {
                 observer.observe(section);
             });
+
+            // Ensure the first item is active on initial load if no scrolling occurs
+            if (navLinks.length > 0) {
+                navLinks[0].classList.add('active');
+            }
         });
     </script>
 </body>

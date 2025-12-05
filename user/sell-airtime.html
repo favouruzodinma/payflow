@@ -55,6 +55,7 @@
         }
 
         /* Network Selection Active States */
+        .network-btn { transition: all 0.3s ease; }
         .network-btn.active {
             background-color: rgba(255, 255, 255, 0.1);
             border-width: 2px;
@@ -63,6 +64,17 @@
         .network-btn-airtel.active { border-color: #ef4444; color: #ef4444; } /* Red */
         .network-btn-glo.active { border-color: #22c55e; color: #22c55e; } /* Green */
         .network-btn-9mobile.active { border-color: #10b981; color: #10b981; } /* Teal */
+
+        /* Sidebar Link Styling (Ensuring visual consistency) */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+
+        /* Active nav item for this page */
+        .nav-item.current-page {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-left: 3px solid #3b82f6;
+        }
     </style>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
@@ -88,7 +100,7 @@
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
             
-            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
@@ -100,7 +112,7 @@
 
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Services</p>
 
-            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+            <a href="sell-airtime.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group current-page">
                 <i class="fa-solid fa-rotate w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Sell Airtime</span>
             </a>
@@ -150,22 +162,25 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col relative overflow-hidden">
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-dark-950">
         <div class="absolute inset-0 z-0 pointer-events-none">
             <div class="absolute top-[-10%] left-[-5%] w-96 h-96 bg-blue-600/05 rounded-full blur-[100px]"></div>
             <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-40"></div>
         </div>
 
-        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+        <header class="h-20 flex items-center justify-between px-4 sm:px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
             <div class="flex items-center gap-4">
-                <h2 class="text-xl font-semibold text-white">Sell Airtime</h2>
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-lg font-semibold text-white">Sell Airtime</h2>
             </div>
             <div class="flex items-center gap-6">
                 <div class="hidden md:block text-right">
                     <p class="text-xs text-gray-400">Wallet Balance</p>
                     <p class="text-sm font-bold text-white">₦ 452,300.00</p>
                 </div>
-                <button class="relative text-gray-400 hover:text-white transition">
+                <button class="relative text-gray-400 hover:text-white transition hidden sm:block">
                     <i class="fa-regular fa-bell text-xl"></i>
                 </button>
             </div>
@@ -181,10 +196,10 @@
                             <div class="w-1/2 h-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
                         </div>
 
-                        <form class="space-y-8 mt-2">
+                        <form class="space-y-6 sm:space-y-8 mt-2">
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">1. Select Network</label>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                     <div onclick="selectNetwork(this, 'mtn')" class="network-btn network-btn-mtn cursor-pointer rounded-xl bg-white/5 border border-white/10 p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/10 transition duration-300 group active">
                                         <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition">
                                             <i class="fa-solid fa-sim-card"></i>
@@ -237,7 +252,7 @@
                                 </div>
                                 <div class="text-right">
                                     <p class="text-gray-400 text-sm mb-1">You Receive</p>
-                                    <h3 id="receiveAmount" class="text-3xl font-bold text-white">₦ 0.00</h3>
+                                    <h3 id="receiveAmount" class="text-2xl sm:text-3xl font-bold text-white">₦ 0.00</h3>
                                 </div>
                             </div>
 
@@ -255,31 +270,31 @@
                     <div class="glass-panel p-6 rounded-2xl">
                         <h3 class="text-lg font-bold text-white mb-4">Recent Sales</h3>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm">
+                            <table class="w-full text-left text-sm min-w-[400px]">
                                 <thead class="text-gray-500 border-b border-white/5">
                                     <tr>
-                                        <th class="pb-3">Network</th>
-                                        <th class="pb-3">Amount</th>
-                                        <th class="pb-3">Status</th>
-                                        <th class="pb-3 text-right">Date</th>
+                                        <th class="pb-3 px-1">Network</th>
+                                        <th class="pb-3 px-1">Amount</th>
+                                        <th class="pb-3 px-1">Status</th>
+                                        <th class="pb-3 px-1 text-right">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-white/5">
                                     <tr class="group hover:bg-white/5 transition">
-                                        <td class="py-3 flex items-center gap-2">
+                                        <td class="py-3 px-1 flex items-center gap-2">
                                             <div class="w-2 h-2 rounded-full bg-yellow-500"></div> MTN
                                         </td>
-                                        <td class="py-3">₦ 5,000</td>
-                                        <td class="py-3"><span class="text-green-400 bg-green-400/10 px-2 py-0.5 rounded text-xs">Completed</span></td>
-                                        <td class="py-3 text-right text-gray-400">Just now</td>
+                                        <td class="py-3 px-1">₦ 5,000</td>
+                                        <td class="py-3 px-1"><span class="text-green-400 bg-green-400/10 px-2 py-0.5 rounded text-xs">Completed</span></td>
+                                        <td class="py-3 px-1 text-right text-gray-400">Just now</td>
                                     </tr>
                                     <tr class="group hover:bg-white/5 transition">
-                                        <td class="py-3 flex items-center gap-2">
+                                        <td class="py-3 px-1 flex items-center gap-2">
                                             <div class="w-2 h-2 rounded-full bg-red-500"></div> Airtel
                                         </td>
-                                        <td class="py-3">₦ 2,000</td>
-                                        <td class="py-3"><span class="text-green-400 bg-green-400/10 px-2 py-0.5 rounded text-xs">Completed</span></td>
-                                        <td class="py-3 text-right text-gray-400">Yesterday</td>
+                                        <td class="py-3 px-1">₦ 2,000</td>
+                                        <td class="py-3 px-1"><span class="text-green-400 bg-green-400/10 px-2 py-0.5 rounded text-xs">Completed</span></td>
+                                        <td class="py-3 px-1 text-right text-gray-400">Yesterday</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -358,6 +373,20 @@
     </main>
 
     <script>
+        // Sidebar Toggle function (FIXED)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+        
         // Simple script to handle Network selection visuals
         function selectNetwork(element, network) {
             // Remove active class from all buttons
@@ -366,22 +395,30 @@
             });
             // Add active class to clicked button
             element.classList.add('active');
+            
+            // Re-calculate based on the new network/rate if necessary
+            calculateTotal();
         }
 
         // Script to calculate the "You Receive" amount
         function calculateTotal() {
             const input = document.getElementById('amountInput').value;
             const display = document.getElementById('receiveAmount');
-            const rate = 0.85; // 85%
+            
+            // Simplified rate logic (MTN rate is 85% based on initial active state)
+            const rate = 0.85; 
 
-            if(input) {
-                const result = input * rate;
+            if(input && parseFloat(input) > 0) {
+                const result = parseFloat(input) * rate;
                 // Format currency
                 display.innerText = '₦ ' + result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
             } else {
                 display.innerText = '₦ 0.00';
             }
         }
+
+        // Ensure calculation runs on load if an amount is pre-filled
+        document.addEventListener('DOMContentLoaded', calculateTotal);
     </script>
 </body>
 </html>

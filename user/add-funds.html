@@ -83,7 +83,7 @@
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
 
-   <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm lg:hidden" onclick="toggleSidebar()"></div>
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden backdrop-blur-sm lg:hidden" onclick="toggleSidebar()"></div>
 
     <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 glass-sidebar z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
         <div class="h-24 flex items-center px-8">
@@ -104,7 +104,7 @@
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
             
-            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg group" >
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
@@ -180,11 +180,11 @@
                 <h2 class="text-lg font-semibold text-white">Fund Wallet</h2>
             </div>
             <div class="flex items-center gap-6">
-                <div class="hidden md:block text-right">
+                <div class="md:block text-right">
                     <p class="text-xs text-gray-400">Current Balance</p>
                     <p class="text-sm font-bold text-white">₦ 452,300.00</p>
                 </div>
-                <button class="relative text-gray-400 hover:text-white transition">
+                <button class="relative text-gray-400 hover:text-white transition hidden sm:block">
                     <i class="fa-regular fa-bell text-xl"></i>
                 </button>
             </div>
@@ -196,22 +196,22 @@
                 <div class="lg:col-span-2 space-y-6">
                     
                     <div class="grid grid-cols-3 gap-3">
-                        <button onclick="setMethod('transfer')" id="tab-transfer" class="method-tab active py-4 rounded-xl border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 flex flex-col items-center gap-2 group">
-                            <i class="fa-solid fa-building-columns text-xl group-hover:scale-110 transition"></i>
-                            <span class="text-xs font-bold uppercase tracking-wide">Bank Transfer</span>
+                        <button onclick="setMethod('transfer')" id="tab-transfer" class="method-tab active py-3 sm:py-4 rounded-xl border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 flex flex-col items-center gap-1 sm:gap-2 group">
+                            <i class="fa-solid fa-building-columns text-lg sm:text-xl group-hover:scale-110 transition"></i>
+                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide">Bank Transfer</span>
                         </button>
-                        <button onclick="setMethod('card')" id="tab-card" class="method-tab py-4 rounded-xl border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 flex flex-col items-center gap-2 group">
-                            <i class="fa-regular fa-credit-card text-xl group-hover:scale-110 transition"></i>
-                            <span class="text-xs font-bold uppercase tracking-wide">Card / Apple Pay</span>
+                        <button onclick="setMethod('card')" id="tab-card" class="method-tab py-3 sm:py-4 rounded-xl border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 flex flex-col items-center gap-1 sm:gap-2 group">
+                            <i class="fa-regular fa-credit-card text-lg sm:text-xl group-hover:scale-110 transition"></i>
+                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide">Card / Apple Pay</span>
                         </button>
-                        <button onclick="setMethod('ussd')" id="tab-ussd" class="method-tab py-4 rounded-xl border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 flex flex-col items-center gap-2 group">
-                            <i class="fa-solid fa-mobile-screen-button text-xl group-hover:scale-110 transition"></i>
-                            <span class="text-xs font-bold uppercase tracking-wide">USSD Code</span>
+                        <button onclick="setMethod('ussd')" id="tab-ussd" class="method-tab py-3 sm:py-4 rounded-xl border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 flex flex-col items-center gap-1 sm:gap-2 group">
+                            <i class="fa-solid fa-mobile-screen-button text-lg sm:text-xl group-hover:scale-110 transition"></i>
+                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide">USSD Code</span>
                         </button>
                     </div>
 
                     <div id="content-transfer" class="method-content active">
-                        <div class="glass-panel p-6 lg:p-8 rounded-2xl border-t-4 border-t-green-500">
+                        <div class="glass-panel p-4 sm:p-6 lg:p-8 rounded-2xl border-t-4 border-t-green-500">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
                                     <h3 class="font-bold text-white text-lg">Virtual Account Funding</h3>
@@ -222,20 +222,20 @@
                                 </div>
                             </div>
 
-                            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-black border border-white/10 p-8 shadow-2xl group">
+                            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-black border border-white/10 p-6 sm:p-8 shadow-2xl group">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
                                 
                                 <div class="relative z-10 flex flex-col items-center text-center space-y-4">
                                     <p class="text-gray-400 text-xs font-bold uppercase tracking-widest">Bank Name</p>
                                     <div class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
                                         <div class="w-4 h-4 rounded-full bg-blue-500"></div>
-                                        <span class="text-white font-medium">PayFlow Microfinance Bank</span>
+                                        <span class="text-white font-medium text-sm">PayFlow Microfinance Bank</span>
                                     </div>
 
                                     <div class="py-4">
                                         <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Account Number</p>
                                         <div class="flex items-center justify-center gap-3 group/copy">
-                                            <h1 id="accNum" class="text-4xl md:text-5xl font-mono font-bold text-white tracking-widest">8029 110 442</h1>
+                                            <h1 id="accNum" class="text-3xl sm:text-5xl font-mono font-bold text-white tracking-widest">8029 110 442</h1>
                                             
                                             <button onclick="copyToClipboard('8029110442', this)" class="copy-btn w-10 h-10 rounded-full bg-white/10 hover:bg-green-500 hover:text-white text-gray-400 transition flex items-center justify-center relative">
                                                 <i class="fa-regular fa-copy"></i>
@@ -246,7 +246,7 @@
 
                                     <div>
                                         <p class="text-gray-400 text-xs font-bold uppercase tracking-widest">Account Name</p>
-                                        <p class="text-white font-medium text-lg mt-1">PAYFLOW / ALEX JOHNSON</p>
+                                        <p class="text-white font-medium text-sm sm:text-lg mt-1">PAYFLOW / ALEX JOHNSON</p>
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@
                     </div>
 
                     <div id="content-card" class="method-content">
-                        <div class="glass-panel p-6 lg:p-8 rounded-2xl">
+                        <div class="glass-panel p-4 sm:p-6 lg:p-8 rounded-2xl">
                              <h3 class="font-bold text-white text-lg mb-6">Top-up via Card</h3>
                              
                              <form class="space-y-6">
@@ -272,10 +272,10 @@
                                 </div>
 
                                 <div class="grid grid-cols-4 gap-3">
-                                    <button type="button" class="py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦5k</button>
-                                    <button type="button" class="py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦10k</button>
-                                    <button type="button" class="py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦20k</button>
-                                    <button type="button" class="py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦50k</button>
+                                    <button type="button" class="py-3 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦5k</button>
+                                    <button type="button" class="py-3 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦10k</button>
+                                    <button type="button" class="py-3 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦20k</button>
+                                    <button type="button" class="py-3 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold text-gray-400 hover:text-white border border-white/5 transition">₦50k</button>
                                 </div>
 
                                 <button class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-600/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
@@ -292,7 +292,7 @@
                     </div>
 
                     <div id="content-ussd" class="method-content">
-                        <div class="glass-panel p-6 lg:p-8 rounded-2xl text-center">
+                        <div class="glass-panel p-4 sm:p-6 lg:p-8 rounded-2xl text-center">
                             <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-500 mx-auto mb-4">
                                 <i class="fa-solid fa-mobile-screen-button text-2xl"></i>
                             </div>
@@ -364,14 +364,18 @@
     </main>
 
     <script>
-        // Sidebar Toggle
+        // Sidebar Toggle function (FIXED)
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-menu-overlay');
+            
+            // Check if the sidebar is currently hidden (translated fully left)
             if (sidebar.classList.contains('-translate-x-full')) {
+                // Show sidebar and overlay
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
             } else {
+                // Hide sidebar and overlay
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
             }
@@ -396,6 +400,10 @@
                 // Reset after 2 seconds
                 setTimeout(() => {
                     btnElement.classList.remove('copied');
+                    // Remove copied class fully after copy completes
+                    if (btnElement.classList.contains('copied')) {
+                        btnElement.classList.remove('copied');
+                    }
                 }, 2000);
             });
         }

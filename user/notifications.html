@@ -65,6 +65,10 @@
             color: white;
             border-bottom-color: #3b82f6;
         }
+
+        /* Sidebar Link Styling (Ensuring visual consistency) */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
     </style>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
@@ -90,7 +94,7 @@
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
             
-            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
@@ -152,22 +156,24 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col relative overflow-hidden">
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-dark-950">
         <div class="absolute inset-0 z-0 pointer-events-none">
             <div class="absolute top-10 right-1/2 w-96 h-96 bg-blue-600/05 rounded-full blur-[100px]"></div>
             <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-40"></div>
         </div>
 
-        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+        <header class="h-20 flex items-center justify-between px-4 sm:px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
             <div class="flex items-center gap-4">
-                <button class="lg:hidden text-gray-400"><i class="fa-solid fa-bars"></i></button>
-                <h2 class="text-xl font-semibold text-white">Notifications</h2>
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-lg font-semibold text-white">Notifications</h2>
             </div>
             <div class="flex items-center gap-4">
-                <button class="text-xs text-blue-400 hover:text-white transition font-medium">Settings</button>
+                <button class="text-xs text-blue-400 hover:text-white transition font-medium hidden sm:block">Settings</button>
                 <button class="relative text-white transition">
                     <i class="fa-solid fa-bell text-xl"></i>
-                    </button>
+                </button>
             </div>
         </header>
 
@@ -175,7 +181,7 @@
             <div class="max-w-4xl mx-auto">
                 
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                    <div class="flex gap-6 border-b border-white/10 w-full sm:w-auto">
+                    <div class="flex gap-4 sm:gap-6 border-b border-white/10 w-full sm:w-auto">
                         <button onclick="filterNotifs('all')" id="tab-all" class="tab-btn active pb-3 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition">All</button>
                         <button onclick="filterNotifs('unread')" id="tab-unread" class="tab-btn pb-3 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition flex items-center gap-2">
                             Unread <span class="bg-blue-600 text-white text-[10px] px-1.5 py-0.5 rounded-full">3</span>
@@ -183,7 +189,7 @@
                         <button onclick="filterNotifs('trans')" id="tab-trans" class="tab-btn pb-3 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition">Transactional</button>
                     </div>
 
-                    <button class="text-sm text-gray-400 hover:text-white flex items-center gap-2 transition">
+                    <button class="text-sm text-gray-400 hover:text-white flex items-center gap-2 transition w-full sm:w-auto justify-start sm:justify-end py-2 sm:py-0">
                         <i class="fa-solid fa-check-double"></i> Mark all as read
                     </button>
                 </div>
@@ -192,90 +198,90 @@
                     
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 mt-4">Today</p>
 
-                    <div class="notif-item type-unread type-trans glass-panel p-4 rounded-xl flex gap-4 hover:bg-white/5 transition cursor-pointer border-l-4 border-l-blue-500 bg-blue-900/5">
+                    <div class="notif-item type-unread type-trans glass-panel p-3 sm:p-4 rounded-xl flex gap-3 sm:gap-4 hover:bg-white/5 transition cursor-pointer border-l-4 border-l-blue-500 bg-blue-900/5 group">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 border border-green-500/20">
-                                <i class="fa-solid fa-arrow-down"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 border border-green-500/20">
+                                <i class="fa-solid fa-arrow-down text-sm"></i>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start">
-                                <h4 class="text-sm font-bold text-white">Airtime Sold Successfully</h4>
+                                <h4 class="text-sm font-bold text-white pr-4">Airtime Sold Successfully</h4>
                                 <span class="text-xs text-blue-400 font-medium whitespace-nowrap">2 mins ago</span>
                             </div>
-                            <p class="text-sm text-gray-300 mt-1">You sold ₦5,000 MTN Airtime. Your wallet has been credited with <span class="text-white font-bold">₦4,250.00</span>.</p>
+                            <p class="text-xs sm:text-sm text-gray-300 mt-1">You sold MTN Airtime. Wallet credited with <span class="text-white font-bold">₦4,250.00</span>.</p>
                         </div>
-                        <div class="flex flex-col justify-between items-end">
-                            <div class="w-2 h-2 rounded-full bg-blue-500 unread-indicator"></div>
-                            <button class="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex flex-col justify-between items-end pl-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 unread-indicator flex-shrink-0"></div>
+                            <button class="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-trash text-xs"></i></button>
                         </div>
                     </div>
 
-                    <div class="notif-item type-unread glass-panel p-4 rounded-xl flex gap-4 hover:bg-white/5 transition cursor-pointer border-l-4 border-l-blue-500 bg-blue-900/5">
+                    <div class="notif-item type-unread glass-panel p-3 sm:p-4 rounded-xl flex gap-3 sm:gap-4 hover:bg-white/5 transition cursor-pointer border-l-4 border-l-blue-500 bg-blue-900/5 group">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20">
-                                <i class="fa-solid fa-shield-halved"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20">
+                                <i class="fa-solid fa-shield-halved text-sm"></i>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start">
-                                <h4 class="text-sm font-bold text-white">New Login Detected</h4>
+                                <h4 class="text-sm font-bold text-white pr-4">New Login Detected</h4>
                                 <span class="text-xs text-blue-400 font-medium whitespace-nowrap">1 hour ago</span>
                             </div>
-                            <p class="text-sm text-gray-300 mt-1">New login from Chrome on Windows (Lagos, NG). Was this you?</p>
+                            <p class="text-xs sm:text-sm text-gray-300 mt-1">New login from Chrome on Windows (Lagos, NG). Was this you?</p>
                         </div>
-                        <div class="flex flex-col justify-between items-end">
-                            <div class="w-2 h-2 rounded-full bg-blue-500 unread-indicator"></div>
+                        <div class="flex flex-col justify-between items-end pl-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 unread-indicator flex-shrink-0"></div>
                         </div>
                     </div>
 
-                    <div class="notif-item type-unread glass-panel p-4 rounded-xl flex gap-4 hover:bg-white/5 transition cursor-pointer border-l-4 border-l-blue-500 bg-blue-900/5">
+                    <div class="notif-item type-unread glass-panel p-3 sm:p-4 rounded-xl flex gap-3 sm:gap-4 hover:bg-white/5 transition cursor-pointer border-l-4 border-l-blue-500 bg-blue-900/5 group">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 border border-purple-500/20">
-                                <i class="fa-solid fa-gift"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 border border-purple-500/20">
+                                <i class="fa-solid fa-gift text-sm"></i>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start">
-                                <h4 class="text-sm font-bold text-white">2% Cashback Active!</h4>
+                                <h4 class="text-sm font-bold text-white pr-4">2% Cashback Active!</h4>
                                 <span class="text-xs text-blue-400 font-medium whitespace-nowrap">3 hours ago</span>
                             </div>
-                            <p class="text-sm text-gray-300 mt-1">Enjoy 2% cashback on all data purchases this weekend. Terms apply.</p>
+                            <p class="text-xs sm:text-sm text-gray-300 mt-1">Enjoy 2% cashback on all data purchases this weekend. Terms apply.</p>
                         </div>
-                        <div class="flex flex-col justify-between items-end">
-                            <div class="w-2 h-2 rounded-full bg-blue-500 unread-indicator"></div>
+                        <div class="flex flex-col justify-between items-end pl-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 unread-indicator flex-shrink-0"></div>
                         </div>
                     </div>
 
                     <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 mt-6">Yesterday</p>
 
-                    <div class="notif-item type-read type-trans glass-panel p-4 rounded-xl flex gap-4 hover:bg-white/5 transition cursor-pointer opacity-70 hover:opacity-100">
+                    <div class="notif-item type-read type-trans glass-panel p-3 sm:p-4 rounded-xl flex gap-3 sm:gap-4 hover:bg-white/5 transition cursor-pointer opacity-70 hover:opacity-100">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
-                                <i class="fa-solid fa-arrow-up"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
+                                <i class="fa-solid fa-arrow-up text-sm"></i>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start">
-                                <h4 class="text-sm font-bold text-white">Withdrawal Successful</h4>
+                                <h4 class="text-sm font-bold text-white pr-4">Withdrawal Successful</h4>
                                 <span class="text-xs text-gray-500 whitespace-nowrap">Yesterday, 4:30 PM</span>
                             </div>
-                            <p class="text-sm text-gray-400 mt-1">Transfer of <span class="text-white">₦10,000</span> to GTBank (Alex Johnson) was successful.</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Transfer of <span class="text-white">₦10,000</span> to GTBank (Alex Johnson) was successful.</p>
                         </div>
                     </div>
 
-                    <div class="notif-item type-read type-trans glass-panel p-4 rounded-xl flex gap-4 hover:bg-white/5 transition cursor-pointer opacity-70 hover:opacity-100">
+                    <div class="notif-item type-read type-trans glass-panel p-3 sm:p-4 rounded-xl flex gap-3 sm:gap-4 hover:bg-white/5 transition cursor-pointer opacity-70 hover:opacity-100">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 border border-yellow-500/20">
-                                <i class="fa-solid fa-bolt"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 border border-yellow-500/20">
+                                <i class="fa-solid fa-bolt text-sm"></i>
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start">
-                                <h4 class="text-sm font-bold text-white">Electricity Bill Paid</h4>
+                                <h4 class="text-sm font-bold text-white pr-4">Electricity Bill Paid</h4>
                                 <span class="text-xs text-gray-500 whitespace-nowrap">Yesterday, 9:00 AM</span>
                             </div>
-                            <p class="text-sm text-gray-400 mt-1">Token: <span class="font-mono bg-white/10 px-1 rounded text-white">4421-5502-1192-3301</span> for Ikeja Electric.</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Token: <span class="font-mono bg-white/10 px-1 rounded text-white">4421-5502-1192-3301</span> for Ikeja Electric.</p>
                         </div>
                     </div>
 
@@ -290,6 +296,20 @@
     </main>
 
     <script>
+        // Sidebar Toggle function (FIXED)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+        
         function filterNotifs(filter) {
             // Update Tab UI
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -298,26 +318,24 @@
             const allItems = document.querySelectorAll('.notif-item');
             
             allItems.forEach(item => {
+                // Show/hide based on filter
                 if (filter === 'all') {
                     item.style.display = 'flex';
                 } else if (filter === 'unread') {
-                    if (item.classList.contains('type-unread')) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
+                    item.style.display = item.classList.contains('type-unread') ? 'flex' : 'none';
                 } else if (filter === 'trans') {
-                    if (item.classList.contains('type-trans')) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
+                    item.style.display = item.classList.contains('type-trans') ? 'flex' : 'none';
                 }
             });
 
-            // Hide/Show headers (Today/Yesterday) based on visibility of children - simplified for demo
-            // In a real app, this logic would be handled by the framework rendering the list
+            // Note: In a production environment, list headers (Today/Yesterday) would need complex logic
+            // or framework assistance to hide/show when all notifications under them are filtered out.
         }
+        
+        // Ensure initial state is set
+        document.addEventListener('DOMContentLoaded', () => {
+            filterNotifs('all'); 
+        });
     </script>
 </body>
 </html>

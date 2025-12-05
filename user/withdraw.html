@@ -66,6 +66,26 @@
             border-color: #3b82f6;
         }
         .bank-option.selected .check-circle i { opacity: 1; }
+
+        /* Sidebar Link Styling (Ensuring visual consistency) */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+
+        /* Active nav item for this page (Adjusted since this is a pseudo-page, linking to dashboard for context) */
+        .nav-item.current-page {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        /* Hide scrollbar, but allow scrolling */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera*/
+        }
     </style>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
@@ -91,7 +111,7 @@
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
             
-            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg group current-page">
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
@@ -159,7 +179,7 @@
             <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-30"></div>
         </div>
 
-        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+        <header class="h-20 flex items-center justify-between px-4 sm:px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
             <div class="flex items-center gap-4">
                 <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
                     <i class="fa-solid fa-bars text-xl"></i>
@@ -167,7 +187,7 @@
                 <h2 class="text-lg font-semibold text-white">Withdraw Funds</h2>
             </div>
             <div class="flex items-center gap-6">
-                <button class="relative text-gray-400 hover:text-white transition">
+                <button class="relative text-gray-400 hover:text-white transition hidden sm:block">
                     <i class="fa-regular fa-bell text-xl"></i>
                 </button>
             </div>
@@ -304,7 +324,7 @@
                         </div>
                         
                         <div class="mt-6 bg-blue-500/10 rounded-lg p-3 flex items-start gap-3">
-                            <i class="fa-solid fa-circle-info text-blue-400 mt-0.5 text-xs"></i>
+                            <i class="fa-solid fa-circle-info text-blue-400 mt-0.5 text-xs flex-shrink-0"></i>
                             <p class="text-xs text-blue-200 leading-relaxed">Funds are typically received within minutes, but may take up to 24 hours depending on the bank network.</p>
                         </div>
                     </div>
@@ -317,23 +337,23 @@
                         <div class="space-y-1">
                             <div class="flex items-center justify-between py-3 hover:bg-white/5 px-2 -mx-2 rounded-lg transition cursor-pointer">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-dark-800 border border-white/5 flex items-center justify-center text-gray-400 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                                    <div class="w-8 h-8 rounded-full bg-dark-800 border border-white/5 flex items-center justify-center text-gray-400 text-xs flex-shrink-0"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
                                     <div>
                                         <p class="text-sm text-white font-medium">To GTBank</p>
                                         <p class="text-[10px] text-gray-500">Yesterday, 4:30 PM</p>
                                     </div>
                                 </div>
-                                <span class="text-sm text-white font-mono">-₦10,000</span>
+                                <span class="text-sm text-white font-mono flex-shrink-0">-₦10,000</span>
                             </div>
                             <div class="flex items-center justify-between py-3 hover:bg-white/5 px-2 -mx-2 rounded-lg transition cursor-pointer">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-dark-800 border border-white/5 flex items-center justify-center text-gray-400 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                                    <div class="w-8 h-8 rounded-full bg-dark-800 border border-white/5 flex items-center justify-center text-gray-400 text-xs flex-shrink-0"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
                                     <div>
                                         <p class="text-sm text-white font-medium">To Kuda</p>
                                         <p class="text-[10px] text-gray-500">Oct 20, 10:15 AM</p>
                                     </div>
                                 </div>
-                                <span class="text-sm text-white font-mono">-₦5,000</span>
+                                <span class="text-sm text-white font-mono flex-shrink-0">-₦5,000</span>
                             </div>
                         </div>
                     </div>
@@ -363,12 +383,6 @@
             element.classList.add('selected');
         }
 
-        // Helper: Format Currency with Commas
-        const formatCurrency = (val) => {
-            if (!val) return "";
-            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        };
-
         const inputField = document.getElementById('withdrawAmount');
 
         // Input Event Listener for auto-formatting and calculations
@@ -376,12 +390,11 @@
             // Remove non-numeric chars except dot
             let value = this.value.replace(/[^0-9.]/g, '');
             
+            // Re-add commas for display (optional/complex, skipping for simplicity)
+            // this.value = formatCurrency(value); 
+
             // Calculate before formatting
             calculateReceipt(value);
-            
-            // Format for display (remove commas first to re-add them correctly)
-            // Note: simple implementation, full input masking is complex
-            // keeping it simple for this demo to allow standard number input feel
         });
 
         function setAmount(val) {
@@ -407,6 +420,11 @@
             document.getElementById('summaryFee').innerText = amount > 0 ? format(fee) : '₦ 0.00';
             document.getElementById('summaryTotal').innerText = format(total);
         }
+        
+        // Initial Calculation on load
+        document.addEventListener('DOMContentLoaded', () => {
+             calculateReceipt(inputField.value);
+        });
     </script>
 </body>
 </html>

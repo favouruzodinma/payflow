@@ -60,6 +60,10 @@
             background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 20%),
                               radial-gradient(circle at 90% 80%, rgba(255,255,255,0.1) 0%, transparent 20%);
         }
+        
+        /* Sidebar Link Styling (Ensuring visual consistency) */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
     </style>
 </head>
 <body class="bg-dark-950 text-white font-sans antialiased h-screen overflow-hidden flex">
@@ -85,7 +89,7 @@
         <div class="flex-1 overflow-y-auto py-4 px-4 space-y-1">
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-2">Overview</p>
             
-            <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg group">
+            <a href="dashboard.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
                 <i class="fa-solid fa-grid-2 w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Dashboard</span>
             </a>
@@ -121,7 +125,7 @@
 
             <p class="px-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6">Account</p>
 
-            <a href="bank-accounts.html" class="nav-item flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group">
+            <a href="bank-accounts.html" class="nav-item active flex items-center gap-3 px-4 py-3 text-gray-400 rounded-lg group" style="background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-left: 3px solid #3b82f6;">
                 <i class="fa-solid fa-building-columns w-5 text-center group-hover:text-blue-400 transition"></i>
                 <span class="font-medium text-sm">Bank Accounts</span>
             </a>
@@ -147,19 +151,23 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col relative overflow-hidden">
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-dark-950">
         <div class="absolute inset-0 z-0 pointer-events-none">
             <div class="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-purple-600/05 rounded-full blur-[100px]"></div>
             <div class="absolute inset-0 bg-grid [mask-image:linear-gradient(to_bottom,black,transparent)] opacity-40"></div>
         </div>
 
-        <header class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
+        <header class="h-20 flex items-center justify-between px-4 sm:px-6 lg:px-10 border-b border-white/5 relative z-10 glass-panel">
             <div class="flex items-center gap-4">
-                <h2 class="text-xl font-semibold text-white">Bank Accounts</h2>
+                 <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-lg font-semibold text-white">Bank Accounts</h2>
             </div>
             <div class="flex items-center gap-6">
-                 <button class="md:hidden bg-blue-600 text-white p-2 rounded-lg"><i class="fa-solid fa-plus"></i></button>
-                <button class="relative text-gray-400 hover:text-white transition">
+                 <button class="lg:hidden bg-blue-600 text-white p-2 rounded-lg text-sm" onclick="document.getElementById('addAccountModal').classList.remove('hidden')"><i class="fa-solid fa-plus"></i> Add</button>
+                
+                <button class="relative text-gray-400 hover:text-white transition hidden md:block">
                     <i class="fa-regular fa-bell text-xl"></i>
                 </button>
             </div>
@@ -176,18 +184,18 @@
 
                     <div class="relative group cursor-pointer">
                         <div class="absolute inset-0 bg-blue-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition"></div>
-                        <div class="relative h-56 bg-card-gradient-1 rounded-2xl p-6 border border-white/10 card-pattern flex flex-col justify-between shadow-xl">
+                        <div class="relative h-48 sm:h-56 bg-card-gradient-1 rounded-2xl p-6 border border-white/10 card-pattern flex flex-col justify-between shadow-xl">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <p class="text-blue-200 text-xs font-medium uppercase tracking-wider mb-1">Primary Account</p>
-                                    <h4 class="text-2xl font-bold text-white">GTBank</h4>
+                                    <h4 class="text-xl sm:text-2xl font-bold text-white">GTBank</h4>
                                 </div>
                                 <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
                                     <i class="fa-solid fa-check text-white"></i>
                                 </div>
                             </div>
 
-                            <div class="font-mono text-xl tracking-widest text-blue-100 opacity-80">
+                            <div class="font-mono text-lg sm:text-xl tracking-widest text-blue-100 opacity-80">
                                 **** **** **** 4291
                             </div>
 
@@ -196,24 +204,24 @@
                                     <p class="text-[10px] text-blue-200 uppercase">Account Name</p>
                                     <p class="text-sm font-semibold">ALEX JOHNSON</p>
                                 </div>
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="h-8 opacity-80">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="h-6 sm:h-8 opacity-80">
                             </div>
                         </div>
                     </div>
 
                     <div class="relative group cursor-pointer transform hover:-translate-y-1 transition duration-300">
-                        <div class="relative h-56 bg-card-gradient-2 rounded-2xl p-6 border border-white/10 card-pattern flex flex-col justify-between shadow-xl opacity-90 hover:opacity-100">
+                        <div class="relative h-48 sm:h-56 bg-card-gradient-2 rounded-2xl p-6 border border-white/10 card-pattern flex flex-col justify-between shadow-xl opacity-90 hover:opacity-100">
                              <div class="flex justify-between items-start">
                                 <div>
                                     <p class="text-purple-200 text-xs font-medium uppercase tracking-wider mb-1">Savings</p>
-                                    <h4 class="text-2xl font-bold text-white">Kuda Bank</h4>
+                                    <h4 class="text-xl sm:text-2xl font-bold text-white">Kuda Bank</h4>
                                 </div>
                                 <button class="w-8 h-8 rounded-full bg-black/20 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center backdrop-blur-sm transition">
                                     <i class="fa-solid fa-trash text-xs"></i>
                                 </button>
                             </div>
 
-                            <div class="font-mono text-xl tracking-widest text-purple-100 opacity-80">
+                            <div class="font-mono text-lg sm:text-xl tracking-widest text-purple-100 opacity-80">
                                 **** **** **** 8820
                             </div>
 
@@ -230,7 +238,7 @@
                 </div>
 
                 <div class="xl:border-l xl:border-white/5 xl:pl-8">
-                    <div class="glass-panel p-6 lg:p-8 rounded-2xl">
+                    <div class="glass-panel p-6 rounded-2xl">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
                                 <i class="fa-solid fa-plus"></i>
@@ -286,7 +294,7 @@
                                 </label>
                             </div>
 
-                            <button type="button" class="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-200 transition shadow-lg shadow-white/5 opacity-50 cursor-not-allowed" id="submitBtn">
+                            <button type="button" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-500 transition shadow-lg shadow-blue-600/20" id="submitBtn" disabled>
                                 Verify & Add Account
                             </button>
                         </form>
@@ -307,26 +315,79 @@
     </main>
 
     <script>
-        // Simulation of Account Name Resolution
+        // Sidebar Toggle function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+        
+        // Simulation of Account Name Resolution & Button Enablement
         const accInput = document.getElementById('accNum');
         const loader = document.getElementById('loader');
         const nameBox = document.getElementById('accountNameBox');
-        const btn = document.getElementById('submitBtn');
+        const nameDisplay = nameBox.querySelector('.font-bold');
+        const submitBtn = document.getElementById('submitBtn');
+        const bankSelect = document.querySelector('select'); // Target the Select Bank dropdown
+        const consentCheckbox = document.getElementById('consent');
+
+        function updateButtonState() {
+            const isVerified = nameBox.classList.contains('hidden') === false;
+            const isConsentChecked = consentCheckbox.checked;
+
+            if (isVerified && isConsentChecked) {
+                submitBtn.removeAttribute('disabled');
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.add('hover:transform', 'hover:-translate-y-1', 'shadow-lg', 'shadow-blue-600/20');
+            } else {
+                submitBtn.setAttribute('disabled', 'true');
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.remove('hover:transform', 'hover:-translate-y-1', 'shadow-lg', 'shadow-blue-600/20');
+            }
+        }
+
+        // Initial setup for button state
+        updateButtonState();
+        consentCheckbox.addEventListener('change', updateButtonState);
 
         accInput.addEventListener('input', function() {
-            if (this.value.length === 10) {
-                // Simulate API Call
+            // Reset state when typing
+            nameBox.classList.add('hidden');
+            nameDisplay.textContent = '';
+            updateButtonState();
+
+            const accountNumber = this.value;
+            const bankValue = bankSelect.value;
+
+            if (accountNumber.length === 10 && bankValue) {
+                // Show loader while simulating verification
                 loader.classList.remove('hidden');
                 
                 setTimeout(() => {
                     loader.classList.add('hidden');
+                    // Simulate successful resolution
+                    nameDisplay.textContent = 'ALEXANDER JOHNSON';
                     nameBox.classList.remove('hidden');
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    btn.classList.add('hover:transform', 'hover:-translate-y-1');
+                    updateButtonState(); 
+
                 }, 1500);
-            } else {
+            }
+        });
+
+        // Trigger verification reset if bank selection changes
+        bankSelect.addEventListener('change', function() {
+            // Only trigger if account number is already 10 digits
+            if (accInput.value.length === 10) {
+                // Clear and re-run simulation for new bank
                 nameBox.classList.add('hidden');
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                accInput.dispatchEvent(new Event('input')); 
             }
         });
     </script>
